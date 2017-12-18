@@ -1,0 +1,32 @@
+        <item>
+                <title><%= image_filename %></title>
+                <link><%= $blog_url %>/?attachment_id=<%= article_id %></link>
+                <pubDate><%= image_pub_date %></pubDate>
+                <dc:creator><![CDATA[admin]]></dc:creator>
+                <guid isPermaLink="false"><%= $blog_url %>/wp-content/uploads/<%= image_filename %></guid>
+                <description></description>
+                <content:encoded><![CDATA[]]></content:encoded>
+                <excerpt:encoded><![CDATA[]]></excerpt:encoded>
+                <wp:post_id><%= @image_post_id %></wp:post_id>
+                <wp:post_date><![CDATA[<%= image_pub_date %>]]></wp:post_date>
+                <wp:post_date_gmt><![CDATA[<%= image_pub_date %>]]></wp:post_date_gmt>
+                <wp:comment_status><![CDATA[open]]></wp:comment_status>
+                <wp:ping_status><![CDATA[closed]]></wp:ping_status>
+                <wp:post_name><![CDATA[<%= image_filename %>]]></wp:post_name>
+                <wp:status><![CDATA[inherit]]></wp:status>
+                <wp:post_parent><%= article_id %></wp:post_parent>
+                <wp:menu_order>0</wp:menu_order>
+                <wp:post_type><![CDATA[attachment]]></wp:post_type>
+                <wp:post_password><![CDATA[]]></wp:post_password>
+                <wp:is_sticky>0</wp:is_sticky>
+                <wp:attachment_url><![CDATA[<%= $blog_url %>/wp-content/uploads/<%= image_filename %>]]></wp:attachment_url>
+                <wp:postmeta>
+                <wp:meta_key><![CDATA[_wp_attached_file]]></wp:meta_key>
+                <wp:meta_value><![CDATA[<%= image_filename %>]]></wp:meta_value>
+                </wp:postmeta>
+                <wp:postmeta>
+                        <wp:meta_key><![CDATA[_wp_attachment_metadata]]></wp:meta_key>
+                        <wp:meta_value><![CDATA[]]></wp:meta_value>
+                </wp:postmeta>
+        </item>
+
