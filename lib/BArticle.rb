@@ -83,6 +83,14 @@ class BArticle
       @imagesdata << File.basename(i.attribute("src").value.gsub("http://www.b-shoku.jp/modules","")).gsub(/.JPG$/,".jpg").gsub(/.PNG/, ".png")
       i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"/wp-content/uploads/").gsub(/.JPG$/,".jpg").gsub(/.PNG/, ".png")
     end
+
+    # 絵文字の処理
+    @article.xpath('//img').each do |i|
+      i.attribute('src').value = i.attribute('src').value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/wp-images\/emoji\//,"/wp-content/uploads/emoji-")
+    end
+    @article.xpath('//img').each do |i|
+      i.attribute('src').value = i.attribute('src').value.gsub(/http:\/\/www.b-shoku.jp\/uploads\/\.\.\/modules\/wordpress\/wp-images\/emoji\//,"/wp-content/uploads/emoji-")
+    end
     
     @comments = parseComment(doc.xpath('//div[@class="popup-contents"]'))
   end

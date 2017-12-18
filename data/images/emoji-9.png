@@ -1,0 +1,52 @@
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html lang="ja">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=EUC-JP">
+<title>食にこだわる無料ブログ＆コミュニティ、B食倶楽部</title>
+<link rel="stylesheet" type="text/css" href="./css/error.css" media="all">
+</head>
+
+<body leftmargin="0" topmargin="0" marginwidth="0" marginheight="0">
+<table width="100%" height="100%" cellpadding="0" cellspacing="0">
+<tr>
+<td align="center">
+
+    <table width="452" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+    <td colspan="3" height="29" class="frame-top"><img src="./image/portal_contents_frame001.gif" width="80" height="29" alt=""></td>
+    </tr>
+    <tr>
+    <td width="29" valign="top" class="frame-left"><img src="./image/portal_contents_frame003.gif" width="29" height="80" alt=""></td>
+    <td width="394" class="contents" align="center" valign="top">
+
+        <img src="./image/logo.gif" alt="B食倶楽部" style="margin : 31px 0px ;">
+
+        <table border="0" width="276" style="margin-bottom : 30px ;">
+        <tr>
+        <td width="60"><img src="./image/icon-alert.gif"></td>
+        <td width="216"><b>お探しのページが見つかりません。</b><br><br>
+            URLが正しく入力されているかどうかご確認ください。
+
+        </td>
+        </tr>
+        </table>
+
+        <div style="text-align : right ;"><a href="./index.php">▲&nbsp;B食倶楽部トップへ</a></div>
+
+    </td>
+    <td width="29" valign="top" class="frame-right"><img src="./image/portal_contents_frame005.gif" width="29" height="80" alt=""></td>
+    </tr>
+    <tr>
+    <td colspan="3" height="29" class="frame-bottom"><img src="./image/portal_contents_frame007.gif" width="80" height="29" alt=""></td>
+    </tr>
+
+    </table>
+
+</td>
+</tr>
+</table>
+</body>
+</html>
