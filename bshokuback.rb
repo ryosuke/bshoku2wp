@@ -78,7 +78,7 @@ def downloadArticleHtml(file)
 end
 
 def downloadPageHtml()
-  i=10
+  i=1
 
   while true do
     # ページ単位で最新から最古までダウンロードする。
