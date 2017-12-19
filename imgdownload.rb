@@ -20,8 +20,13 @@ def parseBFile(file)
   @article.xpath('//img[@class="post_image"]').each do |i|
     imagesdata << i.attribute("src").value
   end
+  @article.xpath('//img').each do |i|
+    unless i.attribute("src").value =~ /[dummy,howto,c_shoku_blog_banner].gif/
+      imagesdata << i.attribute("src").value
+    end
+  end
 
-  return imagesdata
+  return imagesdata.sort.uniq
 end
 
 def downloadImages(images, savedir)

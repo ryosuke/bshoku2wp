@@ -36,7 +36,12 @@ def collectImageFromArticle(file)
   @article.xpath('//img[@class="post_image"]').each do |i|
     imagesdata << i.attribute("src").value
   end
-  return imagesdata
+  @article.xpath('//img').each do |i|
+    unless i.attribute("src").value =~ /[dummy,howto,c_shoku_blog_banner].gif/
+      imagesdata << i.attribute("src").value
+    end
+  end
+  return imagesdata.sort.uniq
 end
 
 def downloadImages(file)
@@ -72,7 +77,7 @@ def downloadArticleHtml(file)
         end
         puts "Download article: #{@savedir}/article-#{num}.html"
       end
-      downloadImages(art)
+      downloadImages("#{@savedir}/article-#{num}.html")
     end
   end
 end
