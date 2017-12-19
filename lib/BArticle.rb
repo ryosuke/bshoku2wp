@@ -64,8 +64,6 @@ class BArticle
     @category = doc.xpath('//div[@class="blog-title-time"]/a').text
     @article = doc.xpath('//div[@class="blog-text-text"]')
 
-    @shop = doc.xpath('//table[@border="0"]')[1]
-
     @imagesdata = Array.new
     # 新しいブログ形式のimgタグ処理(1)
     @article.xpath('//img[@class="post_img_design2"]').each do |i|
@@ -84,12 +82,28 @@ class BArticle
       i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"/wp-content/uploads/").gsub(/.JPG$/,".jpg").gsub(/.PNG/, ".png")
     end
 
+    @article.xpath('//img').each do |i|
+      unless i.attribute("src").value =~ /[dummy,howto,c_shoku_blog_banner].gif/
+        @imagesdata << File.basename(i.attribute("src").value.gsub("http://www.b-shoku.jp/modules","")).gsub(/.JPG$/,".jpg").gsub(/.PNG/, ".png")
+        i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"/wp-content/uploads/").gsub(/.JPG$/,".jpg").gsub(/.PNG/, ".png")
+      end
+    end
+
     # 絵文字の処理
     @article.xpath('//img').each do |i|
       i.attribute('src').value = i.attribute('src').value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/wp-images\/emoji\//,"/wp-content/uploads/emoji-")
     end
     @article.xpath('//img').each do |i|
       i.attribute('src').value = i.attribute('src').value.gsub(/http:\/\/www.b-shoku.jp\/uploads\/\.\.\/modules\/wordpress\/wp-images\/emoji\//,"/wp-content/uploads/emoji-")
+    end
+
+    @article.xpath('//table').each do |table|
+      table.xpath('./tr/td/img').each do |t|
+        if t.attribute("alt").value =~ /B食店情報/
+          t.attribute("src").value = t.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/image\/mypage\//,"/wp-content/uploads/")
+          @shop = table
+        end
+      end
     end
     
     @comments = parseComment(doc.xpath('//div[@class="popup-contents"]'))
@@ -169,4 +183,6 @@ if __FILE__ == $0
   bfile.getImagesData.each do |i|
     puts "     #{i}"
   end
+  puts "Shop:"
+  puts bfile.getShopInfo
 end
