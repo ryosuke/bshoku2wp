@@ -7,6 +7,7 @@
 
 require 'erb'
 require 'uri'
+require 'date'
 require './config.rb'
 
 class BShoku2WP
@@ -64,7 +65,10 @@ class BShoku2WP
       
       a.getImagesData.each do |i|
         image_filename = i
-        image_pub_date = a.getPubDate
+        image_pub_date_gmt = a.getPubDate.to_datetime.to_time.gmtime.strftime("%a, %d %b %Y %H:%M:%S %z")
+        image_post_date = a.getPubDate.strftime("%Y-%m-%d %H:%M:%S")
+        image_post_date_gmt = a.getPubDate.to_datetime.to_time.gmtime.strftime("%Y-%m-%d %H:%M:%S")
+
         @image_post_id += 1
         puts ERB.new(File.read("erb/blog-images.erb"),nil,"-").result(binding)
       end
