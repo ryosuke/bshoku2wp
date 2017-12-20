@@ -38,7 +38,9 @@ def collectImageFromArticle(file)
   end
   @article.xpath('//img').each do |i|
     unless i.attribute("src").value =~ /[dummy,howto,c_shoku_blog_banner].gif/
-      imagesdata << i.attribute("src").value
+      unless i.attribute("src").value =~ /^file:/
+        imagesdata << i.attribute("src").value
+      end
     end
   end
   return imagesdata.sort.uniq
