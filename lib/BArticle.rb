@@ -61,6 +61,9 @@ class BArticle
                            doc.xpath('//div[@class="blog-update"]').text.scan(/\d+/)[2],
                            doc.xpath('//div[@class="blog-update"]').text.scan(/\d+/)[3],
                            doc.xpath('//div[@class="blog-update"]').text.scan(/\d+/)[4])
+    pub_year = doc.xpath('//div[@class="blog-update"]').text.scan(/\d+/)[0]
+    pub_month = doc.xpath('//div[@class="blog-update"]').text.scan(/\d+/)[1]
+
     @category = doc.xpath('//div[@class="blog-title-time"]/a').text
     @article = doc.xpath('//div[@class="blog-text-text"]')
 
@@ -68,24 +71,28 @@ class BArticle
     # 新しいブログ形式のimgタグ処理(1)
     @article.xpath('//img[@class="post_img_design2"]').each do |i|
       @imagesdata << File.basename(i.attribute("src").value.gsub("http://www.b-shoku.jp/modules","")).gsub(/.JPG$/,".jpg").gsub(/.PNG/, ".png")
-      i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"/wp-content/uploads/").gsub(/.JPG$/,".jpg").gsub(/.PNG/, ".png")
+      #i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"/wp-content/uploads/#{pub_year}/#{pub_month}/").gsub(/.JPG$/,".jpg").gsub(/.PNG/, ".png")
+      i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"/wp-content/uploads/#{pub_year}/#{pub_month}/")
     end
 
     # 新しいブログ形式のimgタグ処理(2)
     @article.xpath('//img[@class="post_img_design"]').each do |i|
       @imagesdata << File.basename(i.attribute("src").value.gsub("http://www.b-shoku.jp/modules","")).gsub(/.JPG$/,".jpg").gsub(/.PNG/, ".png")
-      i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"/wp-content/uploads/").gsub(/.JPG$/,".jpg").gsub(/.PNG/, ".png")
+      #i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"/wp-content/uploads/#{pub_year}/#{pub_month}/").gsub(/.JPG$/,".jpg").gsub(/.PNG/, ".png")
+      i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"/wp-content/uploads/#{pub_year}/#{pub_month}/")
     end
     # 古いブログ形式のimgタグ処理
     @article.xpath('//img[@class="post_image"]').each do |i|
       @imagesdata << File.basename(i.attribute("src").value.gsub("http://www.b-shoku.jp/modules","")).gsub(/.JPG$/,".jpg").gsub(/.PNG/, ".png")
-      i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"/wp-content/uploads/").gsub(/.JPG$/,".jpg").gsub(/.PNG/, ".png")
+      #i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"/wp-content/uploads/#{pub_year}/#{pub_month}/").gsub(/.JPG$/,".jpg").gsub(/.PNG/, ".png")
+      i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"/wp-content/uploads/#{pub_year}/#{pub_month}/")
     end
 
     @article.xpath('//img').each do |i|
       unless i.attribute("src").value =~ /[dummy,howto,c_shoku_blog_banner].gif/
         @imagesdata << File.basename(i.attribute("src").value.gsub("http://www.b-shoku.jp/modules","")).gsub(/.JPG$/,".jpg").gsub(/.PNG/, ".png")
-        i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"/wp-content/uploads/").gsub(/.JPG$/,".jpg").gsub(/.PNG/, ".png")
+        #i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"/wp-content/uploads/#{pub_year}/#{pub_month}/").gsub(/.JPG$/,".jpg").gsub(/.PNG/, ".png")
+        i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"/wp-content/uploads/#{pub_year}/#{pub_month}/")
       end
     end
 
