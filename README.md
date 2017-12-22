@@ -16,11 +16,9 @@ Copyright: Ryosuke KUTSUNA <ryosuke@deer-n-horse.jp>
 
 # 動作環境
 
-bashとRubyのインストールされているUNIX互換環境。Debian GNU/Linux(sid)でのみテストしてます。
+RubyのインストールされているUNIX互換環境。Debian GNU/Linux(sid)でのみテストしてます。
 その他に必要なのは以下ぐらいです。
 
- * nkf
- * wget
  * Ruby Nokogiri XMLライブラリ
  * Ruby uconv EUC-JP変換ライブラリ
 
@@ -35,10 +33,21 @@ IDはB食倶楽部のユーザID(整数)と、保存先を指定する。
 上記を実行し終わると指定したディレクトリができます。
 そこにHTMLとimagesディレクトリに画像がダウンロードされます。
 
-bshoku2wp.rbを実行します。引数にはダウンロードしたファイルがあるディレクトリ名を指定します。
+bshoku2wp.rbを実行します。
+
+-dオプションにはダウンロードしたファイルがあるディレクトリ名を指定します。
+-oオプションには「all」、「text」、「image」、「category」を引数に指定でき、それぞれ全部、記事だけ、画像だけ、カテゴリーの出力選択ができます。
 結果は標準出力に書き出すので適当にリダイレクトしてください。
 
-    $ ruby bshoku2wp.rb DIR > wordpress.xml
+とりあえず三種類出力しておくといいでしょう。imageで出力したXMLは、WordPressではいらないかもです。
+
+    $ ruby bshoku2wp.rb -d bshoku-backup -o category > category.xml
+    $ ruby bshoku2wp.rb -d bshoku-backup -o text > text.xml
+    $ ruby bshoku2wp.rb -d bshoku-backup -o image > image.xml
+
+画像ファイルが「image/年/月」のディレクトリ構成に配置されていない場合、tools/imgrelocate.rb を使って場所変更をしてください。このツールは記事ファイルを読み込み、リンクされている画像を、記事の時刻に併せて配置変え、タイムスタンプを更新します。
+
+    $ ruby tools/imgrelocate.rb bshoku-backup/images bshoku-backup/article-1234.html
 
 # WordPressのインストール
 
@@ -53,11 +62,11 @@ bshoku2wp.rbを実行します。引数にはダウンロードしたファイ�
 
 ## MariaDBをセットアップする
 
-パスワードは適当にやってください。
+DBユーザ名、パスワードは適当にやってください。
 
     $sudo mysql -u root
     mysql> create database wordpress;
-    mysql> GRANT ALL PRIVILEGES ON wordpress.\* TO "suzume"@"localhost" IDENTIFIED BY "password";
+    mysql> GRANT ALL PRIVILEGES ON wordpress.* TO "admin"@"localhost" IDENTIFIED BY "password";
     mysql> FLUSH PRIVILEGES;
     mysql> exit
 
@@ -83,8 +92,8 @@ WordPressをインストールしたURLにブラウザアクセスし、DBの設
 
   * /etc/php/7.0/apache2/php.ini
 
-    post_max_size = 40M
-    upload_max_filesize = 30M
+      post_max_size = 40M
+      upload_max_filesize = 30M
 
 ## 記事URLを設定する。
 
@@ -92,16 +101,15 @@ WordPressをインストールしたURLにブラウザアクセスし、DBの設
 
   * 左メニューの「設定」 -> パーマリンク設定で「基本」を選択する。
 
-## 画像のアップロード方法を指定する。
-
-  * 左メニューの「設定」 -> 「メディア」で「 アップロードしたファイルを年月ベースのフォルダに整理」をはずす。
-
 # 画像をインポートする
 
-左メニューの「メディア」から全てを投稿する。
-同様に、data/emoji-\*.png も投稿しておくといいかもです。
+画像はあらかじめWordPressが稼働してるサーバのDocumentRoot以下 DOCUMENTROOT/wp-content/uploads以下にアップロードしておきます。
+WordPressの「Media from FTP」プラグインを使います。
 
-ちまちまとWeb UIから上げてください。一気にアップロードするとブラウザが止まるかも知れません。
+「設定」リンクをクリックます。
+日付は「ファイルの日時を取得し、それに基づいて更新。必要に応じて変更。Exif情報の日時がある場合に優先的に取得する。 」にチェックを変更します。
+
+「検索&登録」ボタンを押し、リストされた画像全てを登録します。
 
 # データをインポートする
 
