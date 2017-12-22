@@ -6,6 +6,7 @@
 require 'nokogiri'
 require 'uconv'
 require 'fileutils'
+require 'date'
 
 def parseBFile(file)
   imagesdata = Array.new
@@ -64,6 +65,7 @@ unless Dir.exist?("#{imgdir}/#{@publish_year}/#{@publish_month}")
      puts "MKDIR: #{imgdir}/#{@publish_year}/#{@publish_month}"
    else 
      FileUtils.mkdir_p("#{imgdir}/#{@publish_year}/#{@publish_month}")
+     FileUtils.touch("#{imgdir}/#{@publish_year}/#{@publish_month}", :mtime => @pubDate)
    end
 end
 
@@ -74,5 +76,7 @@ images.each do |i|
   else
     FileUtils.mv( "#{imgdir}/#{File.basename(i)}", 
                   "#{imgdir}/#{@publish_year}/#{@publish_month}/#{File.basename(i)}" )
+    FileUtils.touch("#{imgdir}/#{@publish_year}/#{@publish_month}/#{File.basename(i)}", 
+                    :mtime => @pubDate)
   end
 end
