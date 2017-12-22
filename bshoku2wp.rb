@@ -7,13 +7,15 @@
 
 require "./lib/BArticle"
 require "./lib/BShoku2WP"
+require 'optparse'
 
 def print_help
-  puts "Usage: ruby #{$0} target_dir"
-  puts "       target_dir: download directory from b-shoku.jp"
+  puts "Usage: ruby #{$0} <option>"
+  puts "   -d read_dir: download directory from b-shoku.jp"
+  puts "   -o [all,text,image,category]"
 end
 
-def do_export
+def do_export(type)
   files = Dir.glob("#{@target_dir}/article-*.html")
   
   articles = Array.new
@@ -23,14 +25,30 @@ def do_export
   end
     
   converter = BShoku2WP.new
-  converter.export(articles)
+  converter.export(articles, type)
 end
 
-@target_dir = ARGV[0]
+params = ARGV.getopts('o:', 'd:')
+@target_dir = params['d']
+outputtype = ""
+case params['o']
+when "all" then
+  outputtype = "all"
+when "text" then
+  outputtype = "text"
+when "image" then
+  outputtype = "image"
+when "category" then
+  outputtype = "category"
+else
+  print_help
+  exit
+end
+
 if @target_dir == nil then
   print_help
   exit
 else
-  do_export
+  do_export(outputtype)
   exit
 end
