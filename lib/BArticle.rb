@@ -71,37 +71,33 @@ class BArticle
     # 新しいブログ形式のimgタグ処理(1)
     @article.xpath('//img[@class="post_img_design2"]').each do |i|
       @imagesdata << File.basename(i.attribute("src").value.gsub("http://www.b-shoku.jp/modules","")).gsub(/.JPG$/,".jpg").gsub(/.PNG/, ".png")
-      #i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"/wp-content/uploads/#{pub_year}/#{pub_month}/").gsub(/.JPG$/,".jpg").gsub(/.PNG/, ".png")
-      i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"/wp-content/uploads/#{pub_year}/#{pub_month}/")
+      i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"#{$blog_url}/wp-content/uploads/#{pub_year}/#{pub_month}/")
     end
 
     # 新しいブログ形式のimgタグ処理(2)
     @article.xpath('//img[@class="post_img_design"]').each do |i|
       @imagesdata << File.basename(i.attribute("src").value.gsub("http://www.b-shoku.jp/modules","")).gsub(/.JPG$/,".jpg").gsub(/.PNG/, ".png")
-      #i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"/wp-content/uploads/#{pub_year}/#{pub_month}/").gsub(/.JPG$/,".jpg").gsub(/.PNG/, ".png")
-      i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"/wp-content/uploads/#{pub_year}/#{pub_month}/")
+      i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"#{$blog_url}/wp-content/uploads/#{pub_year}/#{pub_month}/")
     end
     # 古いブログ形式のimgタグ処理
     @article.xpath('//img[@class="post_image"]').each do |i|
       @imagesdata << File.basename(i.attribute("src").value.gsub("http://www.b-shoku.jp/modules","")).gsub(/.JPG$/,".jpg").gsub(/.PNG/, ".png")
-      #i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"/wp-content/uploads/#{pub_year}/#{pub_month}/").gsub(/.JPG$/,".jpg").gsub(/.PNG/, ".png")
-      i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"/wp-content/uploads/#{pub_year}/#{pub_month}/")
+      i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"#{$blog_url}/wp-content/uploads/#{pub_year}/#{pub_month}/")
     end
 
     @article.xpath('//img').each do |i|
       unless i.attribute("src").value =~ /[dummy,howto,c_shoku_blog_banner].gif/
         @imagesdata << File.basename(i.attribute("src").value.gsub("http://www.b-shoku.jp/modules","")).gsub(/.JPG$/,".jpg").gsub(/.PNG/, ".png")
-        #i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"/wp-content/uploads/#{pub_year}/#{pub_month}/").gsub(/.JPG$/,".jpg").gsub(/.PNG/, ".png")
-        i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"/wp-content/uploads/#{pub_year}/#{pub_month}/")
+        i.attribute("src").value = i.attribute("src").value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/attach\/u\d+\//,"#{$blog_url}/wp-content/uploads/#{pub_year}/#{pub_month}/")
       end
     end
 
     # 絵文字の処理
     @article.xpath('//img').each do |i|
-      i.attribute('src').value = i.attribute('src').value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/wp-images\/emoji\//,"/wp-content/uploads/emoji-")
+      i.attribute('src').value = i.attribute('src').value.gsub(/http:\/\/www.b-shoku.jp\/modules\/wordpress\/wp-images\/emoji\//,"#{$blog_url}/wp-content/uploads/emoji-")
     end
     @article.xpath('//img').each do |i|
-      i.attribute('src').value = i.attribute('src').value.gsub(/http:\/\/www.b-shoku.jp\/uploads\/\.\.\/modules\/wordpress\/wp-images\/emoji\//,"/wp-content/uploads/emoji-")
+      i.attribute('src').value = i.attribute('src').value.gsub(/http:\/\/www.b-shoku.jp\/uploads\/\.\.\/modules\/wordpress\/wp-images\/emoji\//,"#{$blog_url}/wp-content/uploads/emoji-")
     end
 
     @article.xpath('//table').each do |table|
